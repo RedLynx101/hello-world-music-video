@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="t d">
+  <title id="t">Hello, World: the pipeline</title>
+  <desc id="d">Six stages from left to right and top to bottom. 1, audio analysis: analyze.py and analyze_rig.py separate the vocal stem with Demucs, transcribe and force-align the lyrics, and extract beats, drum hits, per-frame energy and a 40-band vocal spectrum. 2, lyric timing: timing.py merges the transcript and alignment into word-level lyric timings and a beat grid. 3, shot timeline: shots.py and rig.py key 33 shots and the orb's audio-reactive rig to the lyrics, in plain Python shared by Blender and the compositor. 4, Blender bake and render: world.py builds the scene from code, bakes 5,925 frames for two cameras and renders 16-bit EXR plates. 5, compositor: comp.py and look.py add bloom, tone mapping, overlays, typed lyrics and glitches, then pipe frames to ffmpeg. 6, deliverables: the 1080p master, the 1440p upload, three vertical Shorts, SRT captions, thumbnails and covers.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C9B9A8"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#140B0C"/>
+      <stop offset="0.55" stop-color="#110C10"/>
+      <stop offset="1" stop-color="#1A1220"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <text x="45" y="72" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="40" fill="#F3ECE2">Hello, World: the pipeline</text>
+  <text x="45" y="110" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#B9B2A8">One song and its lyrics go in; a music video and three Shorts come out. Each stage is a script in scripts/.</text>
+
+  <g font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" fill="#E9E1D6">
+    <!-- 1 audio analysis -->
+    <g transform="translate(45,150)">
+      <rect width="470" height="300" rx="14" fill="#1C1416" stroke="#FF3B2F" stroke-opacity="0.55" stroke-width="1.5"/>
+      <rect width="470" height="5" rx="2.5" fill="#FF3B2F"/>
+      <circle cx="34" cy="44" r="17" fill="#FF3B2F"/>
+      <text x="34" y="50.5" text-anchor="middle" font-size="18" font-weight="700" fill="#140B0C">1</text>
+      <text x="62" y="51" font-size="23" font-weight="600" fill="#F3ECE2">Audio analysis</text>
+      <text x="24" y="86" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="15.5" fill="#FFB070">analyze.py · analyze_rig.py</text>
+      <text x="24" y="122" font-size="16.5">• Demucs separates the vocal stem</text>
+      <text x="24" y="149" font-size="16.5">• Whisper transcript + forced lyric alignment</text>
+      <text x="24" y="176" font-size="16.5">• librosa beat grid, drum hits, frame energy</text>
+      <text x="24" y="203" font-size="16.5">• 40-band vocal spectrum, one row per frame</text>
+      <text x="24" y="246" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="14.5" fill="#B9B2A8"><tspan fill="#7E756C">in</tspan><tspan x="66">song WAV + lyric text</tspan></text>
+      <text x="24" y="272" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="14.5" fill="#B9B2A8"><tspan fill="#7E756C">out</tspan><tspan x="66">music.json · rig.json · rig_spec.png</tspan></text>
+    </g>
+    <!-- 2 lyric timing -->
+    <g transform="translate(565,150)">
+      <rect width="470" height="300" rx="14" fill="#1C1416" stroke="#FF5A3C" stroke-opacity="0.55" stroke-width="1.5"/>
+      <rect width="470" height="5" rx="2.5" fill="#FF5A3C"/>
+      <circle cx="34" cy="44" r="17" fill="#FF5A3C"/>
+      <text x="34" y="50.5" text-anchor="middle" font-size="18" font-weight="700" fill="#140B0C">2</text>
+      <text x="62" y="51" font-size="23" font-weight="600" fill="#F3ECE2">Lyric timing</text>
+      <text x="24" y="86" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="15.5" fill="#FFB070">timing.py</text>
+      <text x="24" y="122" font-size="16.5">• Merges transcript and alignment word by word</text>
+      <text x="24" y="149" font-size="16.5">• Each lyric word gets its sung start and end</text>
+      <text x="24" y="176" font-size="16.5">• Quarter notes and downbeats from the beats</text>
+      <text x="24" y="203" font-size="16.5">• Strongest drum hits become glitch triggers</text>
+      <text x="24" y="272" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="14.5" fill="#B9B2A8"><tspan fill="#7E756C">out</tspan><tspan x="66">timing.json (61 lines, word level)</tspan></text>
+    </g>
+    <!-- 3 shot timeline -->
+    <g transform="translate(1085,150)">
+      <rect width="470" height="300" rx="14" fill="#1C1416" stroke="#FF7A45" stroke-opacity="0.55" stroke-width="1.5"/>
+      <rect width="470" height="5" rx="2.5" fill="#FF7A45"/>
+      <circle cx="34" cy="44" r="17" fill="#FF7A45"/>
+      <text x="34" y="50.5" text-anchor="middle" font-size="18" font-weight="700" fill="#140B0C">3</text>
+      <text x="62" y="51" font-size="23" font-weight="600" fill="#F3ECE2">Shot timeline and orb rig</text>
+      <text x="24" y="86" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="15.5" fill="#FFB070">shots.py · rig.py</text>
+      <text x="24" y="122" font-size="16.5">• 33 shots keyed to lyric words</text>
+      <text x="24" y="149" font-size="16.5">• Camera and orb placement for 16:9 and 9:16</text>
+      <text x="24" y="176" font-size="16.5">• Orb moods (color, tilt, spin) run across cuts</text>
+      <text x="24" y="203" font-size="16.5">• Voice, kicks and shockwaves ride on top</text>
+      <text x="24" y="272" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="14.5" fill="#B9B2A8">plain Python, shared by Blender and comp</text>
+    </g>
+    <!-- 4 blender -->
+    <g transform="translate(45,555)">
+      <rect width="470" height="300" rx="14" fill="#1C1416" stroke="#F2A65A" stroke-opacity="0.55" stroke-width="1.5"/>
+      <rect width="470" height="5" rx="2.5" fill="#F2A65A"/>
+      <circle cx="34" cy="44" r="17" fill="#F2A65A"/>
+      <text x="34" y="50.5" text-anchor="middle" font-size="18" font-weight="700" fill="#140B0C">4</text>
+      <text x="62" y="51" font-size="23" font-weight="600" fill="#F3ECE2">Blender bake and render</text>
+      <text x="24" y="86" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="15.5" fill="#FFB070">world.py  (Blender 5.x, headless)</text>
+      <text x="24" y="122" font-size="16.5">• Sea, 1,600 city lights and the orb, all code</text>
+      <text x="24" y="149" font-size="16.5">• Bakes 5,925 frames for two cameras</text>
+      <text x="24" y="176" font-size="16.5">• Voice ring reads the vocal spectrum image</text>
+      <text x="24" y="203" font-size="16.5">• EEVEE renders 16-bit EXR plates</text>
+      <text x="24" y="272" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="14.5" fill="#B9B2A8"><tspan fill="#7E756C">out</tspan><tspan x="66">plates · proj.json · cities.json</tspan></text>
+    </g>
+    <!-- 5 compositor -->
+    <g transform="translate(565,555)">
+      <rect width="470" height="300" rx="14" fill="#1C1416" stroke="#FFB347" stroke-opacity="0.55" stroke-width="1.5"/>
+      <rect width="470" height="5" rx="2.5" fill="#FFB347"/>
+      <circle cx="34" cy="44" r="17" fill="#FFB347"/>
+      <text x="34" y="50.5" text-anchor="middle" font-size="18" font-weight="700" fill="#140B0C">5</text>
+      <text x="62" y="51" font-size="23" font-weight="600" fill="#F3ECE2">Compositor</text>
+      <text x="24" y="86" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="15.5" fill="#FFB070">comp.py · look.py</text>
+      <text x="24" y="122" font-size="16.5">• Bloom, ACES tone map, grain, vignette</text>
+      <text x="24" y="149" font-size="16.5">• Overlays projected through the baked camera</text>
+      <text x="24" y="176" font-size="16.5">• Typed lyrics, cursor, glitches on drum hits</text>
+      <text x="24" y="203" font-size="16.5">• Worker pool pipes raw frames to ffmpeg</text>
+      <text x="24" y="272" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="14.5" fill="#B9B2A8"><tspan fill="#7E756C">out</tspan><tspan x="66">H.264 + AAC, song audio muxed in</tspan></text>
+    </g>
+    <!-- 6 deliverables -->
+    <g transform="translate(1085,555)">
+      <rect width="470" height="300" rx="14" fill="#1C1416" stroke="#FFD08A" stroke-opacity="0.55" stroke-width="1.5"/>
+      <rect width="470" height="5" rx="2.5" fill="#FFD08A"/>
+      <circle cx="34" cy="44" r="17" fill="#FFD08A"/>
+      <text x="34" y="50.5" text-anchor="middle" font-size="18" font-weight="700" fill="#140B0C">6</text>
+      <text x="62" y="51" font-size="23" font-weight="600" fill="#F3ECE2">Deliverables</text>
+      <text x="24" y="86" font-family="Consolas, Menlo, 'Courier New', monospace" font-size="15.5" fill="#FFB070">captions.py · thumbs_blend.py · media.py</text>
+      <text x="24" y="122" font-size="16.5">• 1080p master and 1440p YouTube upload</text>
+      <text x="24" y="149" font-size="16.5">• Three vertical Shorts (9:16)</text>
+      <text x="24" y="176" font-size="16.5">• SRT lyric captions from the same timing</text>
+      <text x="24" y="203" font-size="16.5">• Thumbnails, Shorts covers, social cards</text>
+      <text x="24" y="230" font-size="16.5">• QA contact sheets and smoke renders</text>
+    </g>
+  </g>
+
+  <g stroke="#C9B9A8" stroke-width="2.2" fill="none" marker-end="url(#arrow)">
+    <path d="M519,300 L561,300"/>
+    <path d="M1039,300 L1081,300"/>
+    <path d="M1320,454 L1320,502 L280,502 L280,551"/>
+    <path d="M519,705 L561,705"/>
+    <path d="M1039,705 L1081,705"/>
+  </g>
+</svg>

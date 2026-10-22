@@ -1,0 +1,38 @@
+# Song, renders and outputs are not part of this repository
+audio/
+*.wav
+*.mp3
+*.flac
+*.mp4
+*.mov
+*.blend
+*.blend1
+*.exr
+plates/
+plates_v1/
+out/
+media/
+fonts/
+logs/
+
+# Generated analysis files (rebuilt by the scripts)
+analysis/sep/
+analysis/test/
+analysis/words/
+analysis/stills/
+analysis/final/
+analysis/qa_v2/
+analysis/proj*.json
+analysis/cities.json
+analysis/align.json
+analysis/transcribe.json
+analysis/*_segments.txt
+analysis/*.jpg
+analysis/prof.out
+
+# Python and local environment
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*

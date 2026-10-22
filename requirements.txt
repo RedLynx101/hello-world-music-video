@@ -1,0 +1,13 @@
+# Compositor, media and QA scripts (tested with numpy 1.26.4, opencv 4.11, Pillow 10.2 on Python 3.12)
+numpy>=1.26
+opencv-python>=4.9
+Pillow>=10.0
+
+# Audio analysis: analyze.py, analyze_rig.py, vocenv.py
+# (tested with librosa 1.0.0, soundfile 0.14.0, demucs 4.0.1, openai-whisper 20250625, stable-ts 2.19.1,
+# torch 2.2.0 with CUDA 11.8; install a CUDA build of torch from pytorch.org first)
+librosa>=0.10
+soundfile>=0.12
+demucs==4.0.1
+openai-whisper>=20240930
+stable-ts>=2.19
